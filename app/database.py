@@ -8,7 +8,7 @@ from sqlalchemy.orm import sessionmaker
 SECRET_PATH = '/var/run/secrets/app/sensitive/sensitive'
 
 if os.path.exists('/var/run/secrets/app/sensitive/sensitive'):
-    f = open()
+    f = open(SECRET_PATH)
     credentials = json.load(f)
     f.close()
 else:
