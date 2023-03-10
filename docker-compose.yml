@@ -1,0 +1,16 @@
+version: '3.3'
+
+services:
+  mysql:
+    image: mariadb:10.10
+    restart: always
+    container_name: mysql
+    tmpfs:
+      - /tmp
+    environment:
+      MYSQL_DATABASE: database
+      MYSQL_USER: dbuser
+      MYSQL_PASSWORD: password
+      MYSQL_ROOT_PASSWORD: password
+    ports:
+      - "3306:3306"
