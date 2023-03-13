@@ -16,8 +16,15 @@ def init_db(db: Session = Depends(get_db)):
         models.Article(article_name="Bonze Brille", article_number=10007, items_available=5),
     ]
     for article in articles:
-        db.add(article)
-    db.commit()
+        article_query = db.query(models.Article).filter(models.Article.article_number == article.article_number)
+            db_article = article_query.one_or_none()
+            if db_article:
+                update_data = article.dict(exclude_unset=True)
+                article_query.filter(models.Article.article_number == article.article_number).update(update_data, synchronize_session=False)
+                db.commit()
+            else:
+                db.add(article)
+                db.commit()
 
 
 @app.get('/article', response_model=list[schemas.Article])
