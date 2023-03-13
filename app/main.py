@@ -19,7 +19,7 @@ def init_db(db: Session = Depends(get_db)):
         article_query = db.query(models.Article).filter(models.Article.article_number == article.article_number)
         db_article = article_query.one_or_none()
         if db_article:
-            update_data = article.dict(exclude_unset=True)
+            update_data = article.as_dict()
             article_query.filter(models.Article.article_number == article.article_number).update(update_data, synchronize_session=False)
             db.commit()
         else:
